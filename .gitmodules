@@ -1,0 +1,3 @@
+[submodule "deps/yes"]
+	path = deps/yes
+	url = https://github.com/SushiWaUmai/yes
