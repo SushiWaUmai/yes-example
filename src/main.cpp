@@ -1,10 +1,8 @@
-#include <yes/yes.h>
+#include "sandbox.h"
 
 int main(void)
 {
-    using namespace yes;
-
-    Application app;
+    Sandbox app;
     app.Init();
     app.Run();
     app.Terminate();
