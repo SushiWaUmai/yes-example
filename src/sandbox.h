@@ -8,6 +8,7 @@ public:
     void Terminate() override;
 
 private:
+    GLuint vao;
     yes::Buffer vertexBuffer;
     yes::Buffer indexBuffer;
     yes::Shader shader;
