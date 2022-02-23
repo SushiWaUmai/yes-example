@@ -10,4 +10,4 @@ add_executable(yes_example
     "src/sandbox.cpp"
 )
 
-target_link_libraries(yes_example PRIVATE yes)
+target_link_libraries(yes_example PRIVATE "yes")
