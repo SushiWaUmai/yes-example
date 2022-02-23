@@ -9,7 +9,7 @@ public:
 
 private:
     GLuint vao;
-    yes::Buffer vertexBuffer;
-    yes::Buffer indexBuffer;
+    yes::VertexBuffer vertexBuffer;
+    yes::IndexBuffer indexBuffer;
     yes::Shader shader;
 };
