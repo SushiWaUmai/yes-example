@@ -6,4 +6,9 @@ public:
     void Init() override;
     void Update() override;
     void Terminate() override;
+
+private:
+    yes::Buffer vertexBuffer;
+    yes::Buffer indexBuffer;
+    yes::Shader shader;
 };
