@@ -6,10 +6,4 @@ public:
     void Init() override;
     void Update() override;
     void Terminate() override;
-
-private:
-    GLuint vao;
-    yes::VertexBuffer vertexBuffer;
-    yes::IndexBuffer indexBuffer;
-    yes::Shader shader;
 };

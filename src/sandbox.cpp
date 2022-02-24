@@ -18,22 +18,22 @@ void Sandbox::Init()
         2, 3, 0 
     };
 
-    vertexBuffer = yes::VertexBuffer();
-    indexBuffer = yes::IndexBuffer();
-    shader = yes::Shader();
+    yes::VertexBuffer vertexBuffer = yes::VertexBuffer();
+    yes::IndexBuffer indexBuffer = yes::IndexBuffer();
+    yes::Shader shader = yes::Shader();
+    yes::VertexArray vertexArray = yes::VertexArray();
 
+    vertexArray.Init();
     vertexBuffer.Init(sizeof(vertices), vertices, GL_STATIC_DRAW);
     indexBuffer.Init(sizeof(indices), indices, GL_STATIC_DRAW);
 
-    shader.Init("./assets/vert.glsl", "./assets/frag.glsl");
-    shader.Use();
-
-    glCreateVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    
+    vertexArray.Bind();
     vertexBuffer.Bind();
     indexBuffer.Bind();
 
+    shader.Init("./assets/vert.glsl", "./assets/frag.glsl");
+    shader.Use();
+    
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
