@@ -34,13 +34,15 @@ void Sandbox::Init()
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
+    std::cout << ShaderDataTypeUtils::ShaderDataTypeToSize(ShaderDataType::Float) << std::endl;
+    vertexBuffer->Unbind();
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
 }
 
 void Sandbox::Update()
 {
     Application::Update();
-    std::cout << "Update()" << std::endl;
 }
 
 void Sandbox::Terminate()
