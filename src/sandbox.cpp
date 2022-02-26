@@ -20,21 +20,14 @@ void Sandbox::Init()
         2, 3, 0 
     };
 
+    Ref<VertexArray> vertexArray = VertexArray::Create();
     Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
     Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices, GL_STATIC_DRAW);
-    Ref<VertexArray> vertexArray = VertexArray::Create();
 
     Ref<Shader> shader = Shader::Create("./assets/vert.glsl", "./assets/frag.glsl");
-    shader->Use();
-
-    vertexArray->Bind();
-    vertexBuffer->Bind();
-    indexBuffer->Bind();
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
-
-    std::cout << ShaderDataTypeUtils::ShaderDataTypeToSize(ShaderDataType::Float) << std::endl;
     vertexBuffer->Unbind();
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
