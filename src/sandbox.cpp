@@ -3,6 +3,8 @@
 
 void Sandbox::Init()
 {
+    using namespace yes;
+
     Application::Init();
     std::cout << "Init()" << std::endl;
 
@@ -18,22 +20,17 @@ void Sandbox::Init()
         2, 3, 0 
     };
 
-    yes::VertexBuffer vertexBuffer = yes::VertexBuffer();
-    yes::IndexBuffer indexBuffer = yes::IndexBuffer();
-    yes::Shader shader = yes::Shader();
-    yes::VertexArray vertexArray = yes::VertexArray();
+    Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
+    Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices, GL_STATIC_DRAW);
+    Ref<VertexArray> vertexArray = VertexArray::Create();
 
-    vertexArray.Init();
-    vertexBuffer.Init(sizeof(vertices), vertices, GL_STATIC_DRAW);
-    indexBuffer.Init(sizeof(indices), indices, GL_STATIC_DRAW);
+    Ref<Shader> shader = Shader::Create("./assets/vert.glsl", "./assets/frag.glsl");
+    shader->Use();
 
-    vertexArray.Bind();
-    vertexBuffer.Bind();
-    indexBuffer.Bind();
+    vertexArray->Bind();
+    vertexBuffer->Bind();
+    indexBuffer->Bind();
 
-    shader.Init("./assets/vert.glsl", "./assets/frag.glsl");
-    shader.Use();
-    
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
