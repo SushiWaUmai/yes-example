@@ -17,18 +17,17 @@ void Sandbox::Init()
 
     unsigned int indices[] = {
         0, 1, 2,
-        2, 3, 0 
+        2, 3, 0
     };
 
     Ref<VertexArray> vertexArray = VertexArray::Create();
-    Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
-    Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices, GL_STATIC_DRAW);
+    Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(4, ShaderDataType::Vec2, vertices, GL_STATIC_DRAW);
+    Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(2, ShaderDataType::Int3, indices, GL_STATIC_DRAW);
 
     Ref<Shader> shader = Shader::Create("./assets/vert.glsl", "./assets/frag.glsl");
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-    vertexBuffer->Unbind();
+    vertexArray->AddVertexBuffer(0, vertexBuffer);
+    vertexArray->EnableAllVertexAttributes();
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
 }
