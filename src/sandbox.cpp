@@ -28,7 +28,6 @@ void Sandbox::Init()
 
     vertexArray->AddVertexBuffer(0, vertexBuffer);
     vertexArray->SetIndexBuffer(indexBuffer);
-    vertexArray->EnableAllVertexAttributes();
 
     renderer.Submit(vertexArray);
 }
