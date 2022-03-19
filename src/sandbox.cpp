@@ -30,7 +30,7 @@ void Sandbox::Init()
     vertexArray->SetIndexBuffer(indexBuffer);
     vertexArray->EnableAllVertexAttributes();
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
+    renderer.Submit(vertexArray);
 }
 
 void Sandbox::Update()
