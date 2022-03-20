@@ -1,5 +1,6 @@
 #include <iostream>
 #include "sandbox.h"
+#include <glm/gtx/transform.hpp>
 
 void Sandbox::Init()
 {
@@ -27,6 +28,8 @@ void Sandbox::Init()
         2, 3, 0
     };
 
+    glm::mat4 transformation = glm::mat4(1.0f) * glm::translate(glm::vec3(0.25f, 0.25f, 0.0f)) * glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
     Ref<VertexArray> vertexArray = VertexArray::Create();
     Ref<VertexBuffer> positionBuffer = VertexBuffer::Create(4, ShaderDataType::V2F, vertices, GL_STATIC_DRAW);
     Ref<VertexBuffer> colorBuffer = VertexBuffer::Create(4, ShaderDataType::V3F, colors, GL_STATIC_DRAW);
@@ -38,6 +41,8 @@ void Sandbox::Init()
     vertexArray->AddVertexBuffer(0, positionBuffer);
     vertexArray->AddVertexBuffer(1, colorBuffer);
     vertexArray->SetIndexBuffer(indexBuffer);
+
+    shader->SetUniformM4F("_transformation", transformation);
 
     renderer.Submit(vertexArray);
 }
