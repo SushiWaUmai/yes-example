@@ -4,13 +4,13 @@ project(yes_example)
 
 add_subdirectory("./deps/yes")
 
-add_executable(yes_example 
+add_executable(${PROJECT_NAME} 
     "src/main.cpp"
     "src/sandbox.h"
     "src/sandbox.cpp"
 )
 
-target_link_libraries(yes_example PRIVATE "yes")
+target_link_libraries(${PROJECT_NAME} PRIVATE "yes")
 
 add_custom_target("copy-assets-folder" ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
