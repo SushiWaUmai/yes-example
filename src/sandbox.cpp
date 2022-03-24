@@ -2,9 +2,9 @@
 #include "sandbox.h"
 #include <glm/gtx/transform.hpp>
 
-void Sandbox::Init()
+void Sandbox::Start()
 {
-    Application::Init();
+    Application::Start();
     std::cout << "Init()" << std::endl;
 
     using namespace yes;
@@ -62,10 +62,4 @@ void Sandbox::Update()
 {
     renderer.Submit(vertexArray);
     Application::Update();
-}
-
-void Sandbox::Terminate()
-{
-    Application::Terminate();
-    std::cout << "Terminate()" << std::endl;
 }
