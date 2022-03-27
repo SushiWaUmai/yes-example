@@ -7,7 +7,12 @@ public:
     void Update() override;
 
 private:
-    yes::Ref<yes::VertexArray> vertexArray;
+    yes::Ref<yes::VertexArray> squareVertexArray;
     yes::Ref<yes::Shader> shader;
     yes::Ref<yes::Texture> texture;
+
+    GLuint frameBuffer;
+    yes::Ref<yes::VertexArray> frameBufferVertexArray;
+    yes::Ref<yes::Texture> renderTexture;
+    yes::Ref<yes::Shader> frameBufferShader;
 };

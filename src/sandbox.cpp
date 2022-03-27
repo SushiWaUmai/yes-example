@@ -9,6 +9,53 @@ void Sandbox::Start()
 
     using namespace yes;
 
+    {
+        // Create the framebuffer
+        glGenFramebuffers(1, &frameBuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+        // Create the texture
+        renderTexture = Texture::Create(800, 600, 3, NULL);
+        renderTexture->Bind();
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTexture->GetID(), 0);
+
+        // Create a vertex array
+        frameBufferVertexArray = VertexArray::Create();
+
+        // fill the entire screen
+        float positionData[] = {
+            -1.0f, -1.0f,
+             1.0f, -1.0f,
+            -1.0f,  1.0f,
+             1.0f,  1.0f,
+        };
+
+        float uvData[] = {
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+        };
+
+        unsigned int indices[] = {
+            0, 1, 2,
+            1, 2, 3
+        };
+
+        Ref<VertexBuffer> position = VertexBuffer::Create(4, ShaderDataType::V2F, positionData, GL_STATIC_DRAW);
+        Ref<VertexBuffer> uv = VertexBuffer::Create(4, ShaderDataType::V2F, uvData, GL_STATIC_DRAW);
+        Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(2, ShaderDataType::V3U, indices, GL_STATIC_DRAW);
+
+        // create the vertex array
+        frameBufferVertexArray->AddVertexBuffer(0, position);
+        frameBufferVertexArray->AddVertexBuffer(1, uv);
+        frameBufferVertexArray->SetIndexBuffer(indexBuffer);
+
+        frameBufferShader = Shader::Create("./assets/pp.vert", "./assets/pp.frag");
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
     float vertices[] = {
         -0.5f, -0.5f,
          0.5f, -0.5f,
@@ -38,28 +85,51 @@ void Sandbox::Start()
     // glm::mat4 transformation = glm::mat4(1.0f) * glm::translate(glm::vec3(0.25f, 0.25f, 0.0f)) * glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     glm::mat4 transformation = glm::mat4(1.0f);
 
-    vertexArray = VertexArray::Create();
     Ref<VertexBuffer> positionBuffer = VertexBuffer::Create(4, ShaderDataType::V2F, vertices, GL_STATIC_DRAW);
     Ref<VertexBuffer> colorBuffer = VertexBuffer::Create(4, ShaderDataType::V3F, colors, GL_STATIC_DRAW);
     Ref<VertexBuffer> uvBuffer = VertexBuffer::Create(4, ShaderDataType::V2F, uvs, GL_STATIC_DRAW);
-    
-    Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(2, ShaderDataType::V3U, indices, GL_STATIC_DRAW);
 
-    shader = Shader::Create("./assets/vert.glsl", "./assets/frag.glsl");
+    Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(2, ShaderDataType::V3U, indices, GL_STATIC_DRAW);
+    squareVertexArray = VertexArray::Create();
+
+    shader = Shader::Create("./assets/sq.vert", "./assets/sq.frag");
 
     texture = Texture::Create("./assets/noise.png");
-    texture->Bind();
 
-    vertexArray->AddVertexBuffer(0, positionBuffer);
-    vertexArray->AddVertexBuffer(1, colorBuffer);
-    vertexArray->AddVertexBuffer(2, uvBuffer);
-    vertexArray->SetIndexBuffer(indexBuffer);
+    squareVertexArray->AddVertexBuffer(0, positionBuffer);
+    squareVertexArray->AddVertexBuffer(1, colorBuffer);
+    squareVertexArray->AddVertexBuffer(2, uvBuffer);
+    squareVertexArray->SetIndexBuffer(indexBuffer);
 
     shader->SetUniformM4F("_transformation", transformation);
 }
 
 void Sandbox::Update()
 {
-    renderer.Submit(vertexArray);
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        texture->Bind();
+        shader->Use();
+        renderer.Submit(squareVertexArray);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        texture->Unbind();
+        shader->Unuse();
+    }
+
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        frameBufferShader->Use();
+        renderTexture->Bind();
+
+        renderer.Submit(frameBufferVertexArray);
+
+        renderTexture->Unbind();
+        frameBufferShader->Unuse();
+    }
+
     Application::Update();
 }
