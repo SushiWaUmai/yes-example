@@ -105,7 +105,7 @@ void Sandbox::Update()
 {
     {
         frameBuffer->Bind();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        renderer.Clear();
 
         texture->Bind();
         shader->Use();
@@ -117,7 +117,7 @@ void Sandbox::Update()
     }
 
     {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        renderer.Clear();
 
         frameBufferShader->Use();
         renderTexture->Bind();
