@@ -11,7 +11,7 @@ private:
     yes::Ref<yes::Shader> shader;
     yes::Ref<yes::Texture> texture;
 
-    GLuint frameBuffer;
+    yes::Ref<yes::FrameBuffer> frameBuffer;
     yes::Ref<yes::VertexArray> frameBufferVertexArray;
     yes::Ref<yes::Texture> renderTexture;
     yes::Ref<yes::Shader> frameBufferShader;

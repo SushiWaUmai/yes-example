@@ -10,14 +10,13 @@ void Sandbox::Start()
     using namespace yes;
 
     {
-        // Create the framebuffer
-        glGenFramebuffers(1, &frameBuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+        frameBuffer = FrameBuffer::Create();
 
         // Create the texture
         renderTexture = Texture::Create(800, 600, 3, NULL);
         renderTexture->Bind();
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTexture->GetID(), 0);
+
+        frameBuffer->AttachTexture(renderTexture);
 
         // Create a vertex array
         frameBufferVertexArray = VertexArray::Create();
@@ -52,8 +51,6 @@ void Sandbox::Start()
         frameBufferVertexArray->SetIndexBuffer(indexBuffer);
 
         frameBufferShader = Shader::Create("./assets/pp.vert", "./assets/pp.frag");
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     float vertices[] = {
@@ -107,14 +104,14 @@ void Sandbox::Start()
 void Sandbox::Update()
 {
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+        frameBuffer->Bind();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         texture->Bind();
         shader->Use();
         renderer.Submit(squareVertexArray);
 
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        frameBuffer->Unbind();
         texture->Unbind();
         shader->Unuse();
     }
