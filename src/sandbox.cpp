@@ -8,7 +8,6 @@ void Sandbox::Start()
     std::cout << "Init()" << std::endl;
 
     using namespace yes;
-
     {
         frameBuffer = FrameBuffer::Create();
 
