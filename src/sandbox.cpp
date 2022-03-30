@@ -49,7 +49,8 @@ void Sandbox::Start()
         frameBufferVertexArray->AddVertexBuffer(1, uv);
         frameBufferVertexArray->SetIndexBuffer(indexBuffer);
 
-        frameBufferShader = Shader::Create("./assets/pp.vert", "./assets/pp.frag");
+        frameBufferShader = Shader::Create();
+        frameBufferShader->Load("./assets/pp.vert", "./assets/pp.frag");
     }
 
     float vertices[] = {
@@ -88,7 +89,8 @@ void Sandbox::Start()
     Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(2, ShaderDataType::V3U, indices, GL_STATIC_DRAW);
     squareVertexArray = VertexArray::Create();
 
-    shader = Shader::Create("./assets/sq.vert", "./assets/sq.frag");
+    shader = Shader::Create();
+    shader->Load("./assets/sq.vert", "./assets/sq.frag");
 
     texture = Texture::Create("./assets/noise.png");
 
