@@ -1,11 +1,11 @@
-#include <iostream>
+#include <stdio.h>
 #include "sandbox.h"
 #include <glm/gtx/transform.hpp>
 
 void Sandbox::Start()
 {
     Application::Start();
-    std::cout << "Init()" << std::endl;
+    printf("Init()\n");
 
     using namespace yes;
     {
