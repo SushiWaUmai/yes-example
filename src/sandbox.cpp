@@ -2,12 +2,18 @@
 #include "sandbox.h"
 #include <glm/gtx/transform.hpp>
 
+#define SANDBOX_LOGGER "SANDBOX"
+
 void Sandbox::Start()
 {
-    Application::Start();
-    printf("Init()\n");
-
     using namespace yes;
+
+    Application::Start();
+    Logger::Create(SANDBOX_LOGGER);
+    Logger::SetLevel(SANDBOX_LOGGER, Logger::Level::debug);
+
+    Logger::Debug(SANDBOX_LOGGER, "Sandbox::Start()");
+
     {
         frameBuffer = FrameBuffer::Create();
 
