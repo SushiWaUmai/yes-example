@@ -106,6 +106,8 @@ void Sandbox::Start()
     squareVertexArray->SetIndexBuffer(indexBuffer);
 
     shader->SetUniformM4F("_transformation", transformation);
+
+    window.ChangeTitle("YES Sandbox");
 }
 
 void Sandbox::Update()
