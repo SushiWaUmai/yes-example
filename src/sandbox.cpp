@@ -9,7 +9,7 @@ void Sandbox::Start(const char *title, int width, int height)
     using namespace yes;
 
     Application::Start(title, width, height);
-    
+
     Logger::Create(SANDBOX_LOGGER);
     Logger::SetLevel(SANDBOX_LOGGER, Logger::Level::debug);
 
@@ -109,6 +109,12 @@ void Sandbox::Start(const char *title, int width, int height)
     shader->SetUniformM4F("_transformation", transformation);
 
     window.ChangeTitle("YES Sandbox");
+
+    window.OnFramebufferResizeEvent += [this](int width, int height)
+    {
+        renderTexture->Resize(width, height);
+        glViewport(0, 0, width, height);
+    };
 }
 
 void Sandbox::Update()
