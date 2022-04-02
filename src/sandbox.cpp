@@ -4,11 +4,12 @@
 
 #define SANDBOX_LOGGER "SANDBOX"
 
-void Sandbox::Start()
+void Sandbox::Start(const char *title, int width, int height)
 {
     using namespace yes;
 
-    Application::Start();
+    Application::Start(title, width, height);
+    
     Logger::Create(SANDBOX_LOGGER);
     Logger::SetLevel(SANDBOX_LOGGER, Logger::Level::debug);
 
@@ -18,7 +19,7 @@ void Sandbox::Start()
         frameBuffer = FrameBuffer::Create();
 
         // Create the texture
-        renderTexture = Texture::Create(800, 600, 3, NULL);
+        renderTexture = Texture::Create(width, height, 3, NULL);
         renderTexture->Bind();
 
         frameBuffer->AttachTexture(renderTexture);

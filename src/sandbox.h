@@ -3,7 +3,7 @@
 class Sandbox : public yes::Application
 {
 public:
-    void Start() override;
+    void Start(const char *title, int width, int height) override;
     void Update() override;
 
 private:
