@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(yes_example)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory("./deps/yes")
 
